@@ -111,8 +111,6 @@ body {
 }
 
 .mdi {
-    font-size: 70px;
-    color: #fff;
     color: #fff;
     z-index: 1;
     position: absolute;
@@ -266,6 +264,7 @@ canvas {
 }
 /*----------ABOUT-----------------------------*/
 .item-about__hexagon .mdi {
+    font-size: 70px;
     top: 20px;
 }
 .about-page {
@@ -787,6 +786,9 @@ textarea {
 }
 .social .mdi {
     font-size: 32px;
+}
+.footer-scrollTop .mdi {
+    font-size: 70px;
 }
 .social .mdi-send {
     transform: rotate(-30deg);
