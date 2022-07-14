@@ -359,6 +359,7 @@ canvas {
   height: 70px;
   position: relative;
   transform: rotate(30deg);
+  font-size: 70px;
 }
 .item-about__hexagon:before,
 .item-about__hexagon:after {
@@ -734,7 +735,7 @@ textarea {
     text-align: center;
     background: #e31b6d;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 70px;
     height: 50px;
     left: 0;
     line-height: 46px;
@@ -757,9 +758,6 @@ textarea {
     color: inherit;
     text-decoration: none;
 }
-/* .social .mdi:before {
-    font-size: 40px;
-} */
 
 .social,.social:visited { color: #fff; }
 .social:hover { color: #fff; }
