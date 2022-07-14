@@ -1,4 +1,4 @@
-import { animateCanvas } from "./js/animateCanvas.js"
+import { animateCanvas } from "./js/animateCanvas.js";
 
 animateCanvas()
 
