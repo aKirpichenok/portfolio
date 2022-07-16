@@ -288,6 +288,7 @@ canvas {
     justify-content: center;
     flex-direction: row;
     margin: 0 90px;
+    width: 100%;
 }
 .about__item {
     
@@ -303,17 +304,6 @@ canvas {
     opacity: 0;
     transition: all 1.5s;
     transition-delay: 1s;
-}
-@media(max-width: 940px) {
-    .about__items {
-        flex-wrap: wrap;
-        flex-direction: column;
-        margin: 0;
-        
-    }
-    .item-about {
-        flex: 1 1 10%;
-    }
 }
 .item-about._active {
     transform: translateX(0);
@@ -349,8 +339,11 @@ canvas {
         transform: perspective(400px);
     }
 }
-.item-about:not(:last-child) {
-    margin: 0 30px 0 0;
+
+@media (min-width: 941px) {
+    .item-about:not(:last-child) {
+        margin: 0 30px 0 0;
+    }
 }
 
 .item-about__hexagon {
@@ -394,6 +387,44 @@ canvas {
 }
 .item-about__text {
     font-size: 14px;
+}
+
+@media(max-width: 940px) {
+    .about__items {
+        flex-wrap: wrap;
+        flex-direction: row;
+        margin: 0;
+        
+    }
+    .item-about {
+        flex: 1 1 50%;
+        margin: 0px 0px 0px 0px;
+    }
+    .item-about:nth-child(1n+3) {
+        margin: 45px 0px 0px 0px;
+    }
+    .item-about__body {
+        width: 60%;
+    }
+    .item-about__text {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 550px) {
+    .item-about {
+        flex: 1 1 100%;
+    }
+    .item-about:not(:first-child) {
+        margin: 65px 0px 0px 0px;
+    }
+    .item-about__hexagon {
+    width: calc(60px * 1.732);
+    height: 60px;
+    }
+    .item-about__body {
+        width: 100%;
+    }
 }
 
 
@@ -512,6 +543,28 @@ canvas {
     flex-direction: column;
 }
 .skill__item-percents {
+}
+
+@media(max-width: 768px) {
+    .skills-about {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .skills-about-body {
+        margin: 0px 0px 30px 0px;
+    }
+    .skill__item {
+        max-width: 100%;
+    }
+    .skill__item-percents {
+        z-index: 1;
+    }
+}
+@media(max-width: 375px) {
+    .skill__item-percents {
+        font-size: 18px;
+        font-weight: 500;
+    }
 }
 
 /*------------PROJECTS------------------------------*/
