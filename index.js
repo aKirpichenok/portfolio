@@ -55,28 +55,92 @@ function scrollFunction() {
     })
 }
 
-const form = document.querySelector('form')
-form.addEventListener("submit", e => {
-    e.preventDefault()
+// const form = document.querySelector('form')
+// form.addEventListener("submit", e => {
+//     e.preventDefault()
 
-    let formData = new FormData(form)
-    formSent(formData)
-    form.reset()
-})
+//     let formData = new FormData(form)
+//     formSent(formData)
+// })
 
-const formSent = async (form) => {
-    let response = await fetch('sendmail.php', {
-        method: "POST",
-        body: form
-    })
-    if (response.ok) {
-        document.getElementById('contact__success').style.height = '40px'
-        setTimeout(() => {
-            document.getElementById('contact__success').style.height = '0'
-        }, 2000)
-    } else {
-        alert('ERROR')
-    }
-}
+// const formSent = async (form) => {
+//     let response = await fetch('sendmail.php', {
+//         method: "POST",
+//         body: form
+//     })
+//     if (response.ok) {
+//         document.getElementById('contact__success').style.height = '40px'
+//         setTimeout(() => {
+//             document.getElementById('contact__success').style.height = '0'
+//         }, 2000)
+//         form.reset()
+//     } else {
+//         alert('ERROR')
+//     }
+// }
 
+$('.contact__form').on('submit', function (event) {
+
+    event.stopPropagation();
+    event.preventDefault();
+
+    let form = this,
+        submit = $('.submit', form),
+        data = new FormData(),
+        files = $('input[type=file]')
+
+
+    $('.submit', form).val('Отправка...');
+    $('input, textarea', form).attr('disabled', '');
+
+    data.append('name', $('[name="name"]', form).val());
+    data.append('email', $('[name="email"]', form).val());
+    data.append('text', $('[name="message"]', form).val());
+
+
+    files.each(function (key, file) {
+        let cont = file.files;
+        if (cont) {
+            $.each(cont, function (key, value) {
+                data.append(key, value);
+            });
+        }
+    });
+
+    $.ajax({
+        url: 'sendmail.php',
+        type: 'POST',
+        data: data,
+        cache: false,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        xhr: function () {
+            let myXhr = $.ajaxSettings.xhr();
+
+            if (myXhr.upload) {
+                myXhr.upload.addEventListener('progress', function (e) {
+                    if (e.lengthComputable) {
+                        let percentage = (e.loaded / e.total) * 100;
+                        percentage = percentage.toFixed(0);
+                        $('.submit', form)
+                            .html(percentage + '%');
+                    }
+                }, false);
+            }
+
+            return myXhr;
+        },
+        error: function (jqXHR, textStatus) {
+            // Тут выводим ошибку
+        },
+        complete: function () {
+            // Тут можем что-то делать ПОСЛЕ успешной отправки формы
+            console.log('Complete')
+            form.reset()
+        }
+    });
+
+    return false;
+});
 
