@@ -55,92 +55,36 @@ function scrollFunction() {
     })
 }
 
-// const form = document.querySelector('form')
-// form.addEventListener("submit", e => {
-//     e.preventDefault()
-
-//     let formData = new FormData(form)
-//     formSent(formData)
-// })
-
-// const formSent = async (form) => {
-//     let response = await fetch('sendmail.php', {
-//         method: "POST",
-//         body: form
-//     })
-//     if (response.ok) {
-//         document.getElementById('contact__success').style.height = '40px'
-//         setTimeout(() => {
-//             document.getElementById('contact__success').style.height = '0'
-//         }, 2000)
-//         form.reset()
-//     } else {
-//         alert('ERROR')
-//     }
-// }
-
-$('.contact__form').on('submit', function (event) {
-
-    event.stopPropagation();
-    event.preventDefault();
-
-    let form = this,
-        submit = $('.submit', form),
-        data = new FormData(),
-        files = $('input[type=file]')
+const form = document.querySelector('form')
+const TOKEN = "5599428939:AAHwu2AlosFfXZBvVSziyf3FplOpT9N4w5I";
+const CHAT_ID = "-608296678";
+const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`
+form.addEventListener("submit", function (e) {
+    e.preventDefault()
 
 
-    $('.submit', form).val('Отправка...');
-    $('input, textarea', form).attr('disabled', '');
-
-    data.append('name', $('[name="name"]', form).val());
-    data.append('email', $('[name="email"]', form).val());
-    data.append('text', $('[name="message"]', form).val());
-
-
-    files.each(function (key, file) {
-        let cont = file.files;
-        if (cont) {
-            $.each(cont, function (key, value) {
-                data.append(key, value);
-            });
-        }
-    });
-
-    $.ajax({
-        url: 'sendmail.php',
-        type: 'POST',
-        data: data,
-        cache: false,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        xhr: function () {
-            let myXhr = $.ajaxSettings.xhr();
-
-            if (myXhr.upload) {
-                myXhr.upload.addEventListener('progress', function (e) {
-                    if (e.lengthComputable) {
-                        let percentage = (e.loaded / e.total) * 100;
-                        percentage = percentage.toFixed(0);
-                        $('.submit', form)
-                            .html(percentage + '%');
-                    }
-                }, false);
-            }
-
-            return myXhr;
-        },
-        error: function (jqXHR, textStatus) {
-            // Тут выводим ошибку
-        },
-        complete: function () {
-            // Тут можем что-то делать ПОСЛЕ успешной отправки формы
-            console.log('Complete')
+    let message = `<b>Заявка с сайта</b>\n`
+    message += `<b>Отправитель: </b>${this.name.value}\n`
+    message += `<b>Mail: </b>${this.email.value}\n`
+    message += `<b>Message: </b>${this.message.value}`
+    console.log(message)
+    axios.post(URI_API, {
+        chat_id: CHAT_ID,
+        parse_mode: 'html',
+        text: message
+    })
+        .then(res => {
+            document.getElementById('contact__success').style.height = '40px'
+            setTimeout(() => {
+                document.getElementById('contact__success').style.height = '0'
+            }, 2000)
             form.reset()
-        }
-    });
+        })
+        .catch(err => {
+            console.log('ERROR', err)
+        })
+        .finally(() => {
 
-    return false;
-});
+        })
+})
 
