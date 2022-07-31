@@ -58,10 +58,25 @@ function scrollFunction() {
 const form = document.querySelector('form')
 form.addEventListener("submit", e => {
     e.preventDefault()
-    document.getElementById('contact__success').style.height = '40px'
-    setTimeout(() => {
-        document.getElementById('contact__success').style.height = '0'
-    }, 2000)
+
+    let formData = new FormData(form)
+    formSent(formData)
+    form.reset()
 })
+
+const formSent = async (form) => {
+    let response = await fetch('sendmail.php', {
+        method: "POST",
+        body: form
+    })
+    if (response.ok) {
+        document.getElementById('contact__success').style.height = '40px'
+        setTimeout(() => {
+            document.getElementById('contact__success').style.height = '0'
+        }, 2000)
+    } else {
+        alert('ERROR')
+    }
+}
 
 
