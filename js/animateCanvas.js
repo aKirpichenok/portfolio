@@ -1,5 +1,3 @@
-
-
 export function animateCanvas() {
     window.requestAnimFrame = (function () {
         return window.requestAnimationFrame ||
