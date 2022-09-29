@@ -641,6 +641,10 @@ canvas {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    height:100%;
+}
+.face.face2 .content li{
+    line-height: 120%;
 }
 .projects-cards .projects-card .face.face2 .content p{
     font-size: 16px;
